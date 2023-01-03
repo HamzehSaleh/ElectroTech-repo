@@ -1,0 +1,20 @@
+.new-product-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10%;
+  align-items: center;
+  justify-content: flex-start;
+}
+.new-product-form {
+  background-color: #90caf9;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: right;
+  margin: 10px auto;
+}
+
+.new-product-image {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
