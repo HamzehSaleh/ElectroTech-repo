@@ -1,0 +1,45 @@
+.MuiAppBar-root {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-itmes {
+  position: relative;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.cart-badge {
+  position: absolute;
+  width: 20;
+  height: 20;
+  top: -10px;
+  font-size: 14px;
+}
+
+.cart-action:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.edit-action:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  transform: translateX(-50%);
+}
+
+.add-product-button {
+  display: block !important;
+  margin: 0 0 15px auto !important;
+}
+
+.table-actions {
+  display: flex !important;
+}
