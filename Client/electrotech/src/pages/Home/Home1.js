@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import LayoutApp from "../../components/Layout";
+import Layout from "../../components/Layout";
 import Grid from "@material-ui/core/Grid";
 import Product from "../../components/Product";
 import { useDispatch } from "react-redux";
 import { Button } from "@material-ui/core";
 
-const Home = () => {
+const Home1 = () => {
   const dispatch = useDispatch();
   const [productData, setProductData] = useState([]);
   const [categories, setCategories] = useState([
@@ -29,7 +29,6 @@ const Home = () => {
 
         const { data } = await axios.get("http://localhost:3030/products");
         setProductData(data);
-        // console.log(data);
 
         dispatch({
           type: "HIDE_LOADING",
@@ -42,7 +41,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <LayoutApp>
+    <Layout>
       <div className="category">
         {categories.map((ele) => (
           <div className="product-categories">
@@ -65,8 +64,8 @@ const Home = () => {
             </Grid>
           ))}
       </Grid>
-    </LayoutApp>
+    </Layout>
   );
 };
 
-export default Home;
+export default Home1;

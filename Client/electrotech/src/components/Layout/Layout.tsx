@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -22,80 +22,20 @@ import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import AppsIcon from "@material-ui/icons/Apps";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "./layout.css";
-import Spinner from "./Spinner";
+import "../layout.css";
+import Spinner from "../Spinner";
+import { reactElementProps } from "../../types";
 
-const drawerWidth = 240;
+import useStyles from "./styles";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: "none",
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-}));
-
-export default function LayoutApp({ children }) {
-  const navigate = useNavigate();
+const Layout: React.FC<reactElementProps> = ({ children }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
 
-  const { cartItems, loading } = useSelector((state) => state.rootReducer);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const { cartItems, loading } = useSelector((state: any) => state.rootReducer);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,6 +44,8 @@ export default function LayoutApp({ children }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleNavigate = (path: string) => () => navigate(path);
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -134,7 +76,7 @@ export default function LayoutApp({ children }) {
             ElectroTech
           </Typography>
         </Toolbar>
-        <div className="cart-itmes" onClick={() => navigate("/cart")}>
+        <div className="cart-itmes" onClick={handleNavigate("/cart")}>
           <ShoppingCartOutlinedIcon />
           <span className="cart-badge"> {cartItems.length}</span>
         </div>
@@ -163,21 +105,21 @@ export default function LayoutApp({ children }) {
         </div>
         <Divider />
         <List>
-          <ListItem key={1} button onClick={() => navigate("/")}>
+          <ListItem key={1} button onClick={handleNavigate("/")}>
             <ListItemIcon>
               <HomeOutlinedIcon />
             </ListItemIcon>
             <ListItemText>Home</ListItemText>
           </ListItem>
 
-          <ListItem key={2} button onClick={() => navigate("/products")}>
+          <ListItem key={2} button onClick={handleNavigate("/products")}>
             <ListItemIcon>
               <AppsIcon />
             </ListItemIcon>
             <ListItemText>Products</ListItemText>
           </ListItem>
 
-          <ListItem key={3} button onClick={() => navigate("/bills")}>
+          <ListItem key={3} button onClick={handleNavigate("/bills")}>
             <ListItemIcon>
               <LocalAtmOutlinedIcon />
             </ListItemIcon>
@@ -186,7 +128,7 @@ export default function LayoutApp({ children }) {
         </List>
         <Divider />
         <List>
-          <ListItem key={5} button onClick={() => navigate("/products")}>
+          <ListItem key={5} button onClick={handleNavigate("/products")}>
             <ListItemIcon>
               <ExitToAppOutlinedIcon />
             </ListItemIcon>
@@ -198,9 +140,9 @@ export default function LayoutApp({ children }) {
         <div className={classes.toolbar} />
         {loading && <Spinner />}
         {children}
-
-        {/* <Spinner /> */}
       </main>
     </div>
   );
-}
+};
+
+export default Layout;

@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Bills = () => {
+const Bills1 = () => {
   const dispatch = useDispatch();
   const [billData, setBillData] = useState([]);
 
@@ -167,4 +167,4 @@ const Bills = () => {
   );
 };
 
-export default Bills;
+export default Bills1;
